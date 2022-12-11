@@ -25,13 +25,11 @@ for i in range(int(len(lines) / 3)):
   grouped_lines.append(group)
 
 
-print(grouped_lines)
 for group in grouped_lines:
   shared_item = ''
   for char in group[0]:
     if(char in group[1] and char in group[2]): 
       shared_item = char
-      print(char)
   prio_sum += values.index(shared_item) + 1
 
 print(prio_sum)
