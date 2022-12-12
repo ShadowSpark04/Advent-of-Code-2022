@@ -23,13 +23,13 @@ def move(direction):
     snake[0][1] -= 1
   
   for i in range(1, len(snake) - 0):
-    update_tail_2(i)
+    update_tail(i)
 
   print(f"snake: {snake}")
   visited_positions.append(snake[9][:])
 
 
-def update_tail_2(body_part_index):
+def update_tail(body_part_index):
   global snake
 
   if(abs(snake[body_part_index][0] - snake[body_part_index - 1][0]) > 1 or abs(snake[body_part_index][1] - snake[body_part_index - 1][1]) > 1):
@@ -45,24 +45,6 @@ def update_tail_2(body_part_index):
     print(movement_vector)
     snake[body_part_index][0] += movement_vector[0]
     snake[body_part_index][1] += movement_vector[1]
-
-def update_tail(vorgänger, tail_index):
-  
-  global current_position_tail
-  global visited_positions
-  
-  # checks if the tail is at more than 1 distance from the head
-  if(abs(current_position_tail[tail_index + 1][0] - vorgänger[0]) > 1 or abs(current_position_tail[tail_index + 1][1] - vorgänger[1]) > 1):
-    movement_vector = [(x1 - x2) * -1 for (x1, x2) in zip(current_position_tail[tail_index + 1], vorgänger)]
-    if(2 in movement_vector):
-      movement_vector[movement_vector.index(2)] /= 2
-    if(-2 in movement_vector):
-      movement_vector[movement_vector.index(-2)] /= 2
-    print(movement_vector)
-    current_position_tail[tail_index + 1][0] += movement_vector[0]
-    current_position_tail[tail_index + 1][1] += movement_vector[1]
-  print(f"H: {vorgänger}, T: {current_position_tail[tail_index + 1]}")
-  visited_positions.append(current_position_tail[8][:])
     
     
 
