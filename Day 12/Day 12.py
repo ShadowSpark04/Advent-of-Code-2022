@@ -60,14 +60,14 @@ class Ant:
 
   def see(self):
     self.movement = []
-    if(self.x -1 >= 0):
-      if(abs(self.world[self.x][self.y] - self.world[self.x - 1][self.y]) < 2): self.movement.append([self.x - 1, self.y])
-    if(self.y -1 >= 0):
-      if(abs(self.world[self.x][self.y] - self.world[self.x][self.y - 1]) < 2): self.movement.append([self.x, self.y - 1])
-    if(self.x +1 <= len(self.world) - 1):
-      if(abs(self.world[self.x][self.y] - self.world[self.x + 1][self.y]) < 2): self.movement.append([self.x + 1, self.y])
-    if(self.y +1 <= len(self.world[0]) - 1):
-      if(abs(self.world[self.x][self.y] - self.world[self.x][self.y + 1]) < 2): self.movement.append([self.x, self.y + 1])
+    if(self.x -1 >= 0): # links
+      if(0 <= self.world[self.x][self.y] <= self.world[self.x - 1][self.y] - 1): self.movement.append([self.x - 1, self.y])
+    if(self.y -1 >= 0): # oben
+      if(0 <= self.world[self.x][self.y] <= self.world[self.x][self.y - 1] - 1): self.movement.append([self.x, self.y - 1])
+    if(self.x +1 <= len(self.world) - 1): # rechts
+      if(0 <= self.world[self.x][self.y] <= self.world[self.x + 1][self.y] - 1): self.movement.append([self.x + 1, self.y])
+    if(self.y +1 <= len(self.world[0]) - 1): # unten
+      if(0 <= self.world[self.x][self.y] <= self.world[self.x][self.y + 1] - 1): self.movement.append([self.x, self.y + 1])
     
     
 
@@ -75,18 +75,18 @@ class Ant:
     for move in self.movement:
       hight = self.world[self.x][self.y] - self.world[move[0]][move[1]]
 
-      distance_value = (distance(move, self.mark) / distance([self.x, self.y], self.mark)) / -2
-      direction_value = distance(self.last_move, move) / 1
-      height_value = hight * 0
-      random_value = (random.randrange(0, 100) / 50) * -1
+      distance_value = (distance(move, self.mark) / distance([self.x, self.y], self.mark)) / 5
+      direction_value = distance(self.last_move, move) / 2
+      height_value = hight * 1.2
+      random_value = (random.randrange(0, 100) / 50) * 1
 
       # print(f"dist: {distance_value}, dir: {direction_value}, height: {height_value}, rand: {random_value}")
       move.append(distance_value + direction_value + height_value + random_value)
     self.movement = sorted(self.movement, key=lambda l:l[2])
 
-    for move in self.movement:
-      if(self.visited[move[0]][move[1]] == 'x' and len(self.movement) > 1): 
-        self.movement.remove(move)
+    # for move in self.movement:
+     # if(self.visited[move[0]][move[1]] == 'x' and len(self.movement) > 1): 
+        # self.movement.remove(move)
         # print('Removed!')
     # print(self.movement)
     
@@ -108,9 +108,9 @@ class Ant:
 
       
 
-      if(self.steps % 100 == 0): 
+      if(self.steps % 1000 == 0): 
         print(self.world[self.x][self.y])
-        self.search_new_mark(self.x, self.y)
+        # self.search_new_mark(self.x, self.y)
 
       if(self.current_level > self.world[self.x][self.y]):
         self.current_level = self.world[self.x][self.y]
@@ -140,7 +140,7 @@ class Ant:
 
 total = 10000
 
-ants = [Ant(input, [], end_point[0], end_point[1], start_point) for i in range(2)]
+ants = [Ant(input, [], end_point[0], end_point[1], start_point) for i in range(10)]
 
 test = True
 
@@ -151,7 +151,7 @@ while(test):
 
     # if(ants[i].steps % 100 == 0): print(i, ants[i].x, ants[i].y)
 
-    if(ants[i].steps > 1000000): test = False
+    if(ants[i].steps > 100000): test = False
 
 for ant in ants:
   if(ant.steps < total): total = ant.steps
