@@ -96,6 +96,13 @@ class Ant:
 
   def decide(self, possible_directions, last_direction):
 
+    temp_list = []
+    for direction in possible_directions:
+      if(not direction == None):
+        temp_list.append(direction)
+    possible_directions = temp_list
+    
+
     if(len(possible_directions) == 0):
       match last_direction:
         case "left": return "right"
@@ -103,8 +110,10 @@ class Ant:
         case "up": return "down"
         case "down": return "up"
 
+
     for direction in possible_directions:
-      direction[1] += (random.randrange(10)/10) * self.random_strenght
+      print(possible_directions)
+      direction[1] += (random.randrange(10)/10) * self.random_strength
 
     sorted(possible_directions, key=lambda l:l[1], reverse=True)
     
@@ -116,6 +125,8 @@ class Ant:
       case "right": self.x += 1
       case "up": self.y += -1
       case "down": self.y += 1
+
+    self.last_direction = direction
     
   def check_endpoint_reached(self, current_height):
     if(current_height < 27):
@@ -128,9 +139,8 @@ class Ant:
 
     feromone = [[0 for i in range(len(feromone[0]))] for j in range(len(feromone))]
 
-    for i in range(len(traveled_path)):
-      for j in range(len(traveled_path[0])):
-        feromone[i][j] = 1
+    for path in traveled_path:
+      self.feromone[path[0]][path[1]] = 1
         
 
   def do_action(self):
@@ -153,7 +163,7 @@ class Ant:
       print(self.current_height)
 
 
-ants = [Ant(input, start_point, feromone) for i in range(200)]
+ants = [Ant(input, start_point, feromone) for i in range(2)]
 
 finished = False
 
