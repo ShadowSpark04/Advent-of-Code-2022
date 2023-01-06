@@ -103,6 +103,7 @@ class Ant:
     possible_directions = temp_list
     
 
+
     if(len(possible_directions) == 0):
       match last_direction:
         case "left": return "right"
@@ -112,7 +113,7 @@ class Ant:
 
 
     for direction in possible_directions:
-      print(possible_directions)
+      # print(possible_directions)
       direction[1] += (random.randrange(10)/10) * self.random_strength
 
     sorted(possible_directions, key=lambda l:l[1], reverse=True)
